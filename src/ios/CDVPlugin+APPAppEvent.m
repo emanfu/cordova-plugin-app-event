@@ -54,7 +54,9 @@ static IMP orig_pluginInitialize;
 void swizzled_pluginInitialize(id self, SEL _cmd)
 {
     if (orig_pluginInitialize != NULL) {
-        ((void(*)(id, SEL))orig_pluginInitialize)(self, _cmd);
+        if (orig_pluginInitialize != swizzled_pluginInitialize) {
+            ((void(*)(id, SEL))orig_pluginInitialize)(self, _cmd);
+        }
         orig_pluginInitialize = NULL;
     }
 
