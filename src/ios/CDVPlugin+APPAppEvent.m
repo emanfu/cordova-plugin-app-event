@@ -39,7 +39,8 @@ static IMP orig_pluginInitialize;
  */
 + (void) initialize
 {
-    if ([NSStringFromClass(self) hasPrefix:@"CDV"])
+    NSString *className = NSStringFromClass(self);
+    if ([className hasPrefix:@"CDV"] || [className hasPrefix:@"Flurry"] || [className hasPrefix:@"GenericAd"])
         return;
 
     orig_pluginInitialize = [self exchange_init_methods];
@@ -57,7 +58,7 @@ void swizzled_pluginInitialize(id self, SEL _cmd)
         if (orig_pluginInitialize != swizzled_pluginInitialize) {
             ((void(*)(id, SEL))orig_pluginInitialize)(self, _cmd);
         }
-        orig_pluginInitialize = NULL;
+        //orig_pluginInitialize = NULL;
     }
 
     [self addObserver:NSSelectorFromString(@"didReceiveLocalNotification:")
