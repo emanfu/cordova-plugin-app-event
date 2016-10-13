@@ -40,7 +40,8 @@ static IMP orig_pluginInitialize;
 + (void) initialize
 {
     NSString *className = NSStringFromClass(self);
-    if ([className hasPrefix:@"CDV"] || [className hasPrefix:@"Flurry"] || [className hasPrefix:@"GenericAd"])
+    if ([className hasPrefix:@"CDV"] || [className hasPrefix:@"Flurry"] ||
+        [className hasPrefix:@"GenericAd"] || [className hasPrefix:@"SQLitePlugin"])
         return;
 
     orig_pluginInitialize = [self exchange_init_methods];
